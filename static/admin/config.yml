@@ -1,5 +1,6 @@
 backend:
-  name: test-repo
+  name: github
+  repo: oktadeveloper/okta-gatsby-okta-example
   
 media_folder: static/assets
 public_folder: assets
