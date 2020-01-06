@@ -1,6 +1,6 @@
 backend:
   name: github
-  repo: oktadeveloper/okta-gatsby-okta-example
+  repo: oktadeveloper/gatsby-netlify-okta-example
   
 media_folder: static/assets
 public_folder: assets
