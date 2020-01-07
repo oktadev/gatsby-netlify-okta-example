@@ -41,9 +41,9 @@ backend:
 
 Push, watch your Netlify CI process, and enjoy the fruits of your labor when you're in production! 
 
-The only sad part is you'll be using my account for auth. You should really [create your own](https://developer.okta.com/signup].
+The only sad part is you'll be using my account for auth. Fix this by [creating your own Okta developer account](https://developer.okta.com/signup).
 
-Then, register the app for your Gatsby app on Okta:
+Then, register your Gatsby app on Okta:
 
 1. Log in to your developer account, navigate to **Applications**, and click on **Add Application**
 2. Choose **Single-Page App** and **Next**
