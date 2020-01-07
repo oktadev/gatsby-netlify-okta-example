@@ -49,13 +49,13 @@ Then, register the app for your Gatsby app on Okta:
 2. Choose **Single-Page App** and **Next**
 3. Enter a name like `Gatsby Account`
 4. Specify the following Login redirect URIs:
-  * `http://localhost:8000/account`
-  * `http://localhost:9000/account`
-  * `https://<your-site>.netlify.com/account`
+    * `http://localhost:8000/account`
+    * `http://localhost:9000/account`
+    * `https://<your-site>.netlify.com/account`
 5. Specify the following Logout redirect URIs:
-  * `http://localhost:8000`
-  * `http://localhost:9000`
-  * `https://<your-site>.netlify.com`
+    * `http://localhost:8000`
+    * `http://localhost:9000`
+    * `https://<your-site>.netlify.com`
 6. Click **Done**
 
 ### Add Trusted Origins for Your Gatsby Sites
