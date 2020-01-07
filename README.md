@@ -8,10 +8,10 @@ Please read [Build a CRUD App with Angular 9 and Spring Boot](https://developer.
 
 **Prerequisites:** 
 
-> * [Node 12+](https://nodejs.org/en/) installed
-> * A [GitHub Account](https://github.com/join)
-> * A [Netlify Account](https://app.netlify.com/signup)
-> * An [Okta Developer Account](https://developer.okta.com/signup)
+* [Node 12+](https://nodejs.org/en/) installed
+* A [GitHub Account](https://github.com/join)
+* A [Netlify Account](https://app.netlify.com/signup)
+* An [Okta Developer Account](https://developer.okta.com/signup)
 
 > [Okta](https://developer.okta.com/) has Authentication and User Management APIs that reduce development time with instant-on, scalable user infrastructure. Okta's intuitive API and expert support make it easy for developers to authenticate, manage and secure users and roles in any application.
 
