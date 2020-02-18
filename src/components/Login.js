@@ -4,9 +4,9 @@ import React from 'react';
 
 const config = {
   baseUrl: 'https://dev-133320.okta.com',
+  clientId: '0oa2ee3nvkHIe8vzX357',
   logo: '//logo.clearbit.com/gatsbyjs.org',
   redirectUri: typeof window !== 'undefined' && window.location.origin + '/account',
-  clientId: '0oa2ee3nvkHIe8vzX357',
   el: '#signIn',
   authParams: {
     pkce: true,
