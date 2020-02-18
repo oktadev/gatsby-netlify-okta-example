@@ -2,9 +2,7 @@
  
 This example app shows how to build a blog app with the #JAMstack, including Gatsby, Netlify CMS, and Okta. 
 
-<!--
-Please read [Build a CRUD App with Angular 9 and Spring Boot](https://developer.okta.com/blog/2020/01/06/crud-angular-9-spring-boot-2) to see how this app was created.
--->
+Please read [Build a Secure Blog with React, Gatsby, and Netlify](https://developer.okta.com/blog/2020/02/18/gatsby-react-netlify) to see how this app was created.
 
 **Prerequisites:** 
 
@@ -92,7 +90,7 @@ This example uses the following open source libraries:
 
 ## Help
 
-Please post any questions as issues in this repository, or visit our [Okta Developer Forums](https://devforum.okta.com/).
+Please post any questions as [comments on the blog post](https://developer.okta.com/blog/2020/02/18/gatsby-react-netlify), as issues in this repository, or visit our [Okta Developer Forums](https://devforum.okta.com/).
 
 ## License
 
