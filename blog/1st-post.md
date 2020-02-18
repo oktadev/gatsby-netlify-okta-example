@@ -1,6 +1,6 @@
 ---
 path: /blog/first-post
-date: 2020-01-06T20:32:20.631Z
+date: 2020-02-18T15:44:02.080Z
 title: 1st Post!
 ---
-Hello, _production_!
+Hello, world. I hope you're doing **fantastic** today! 😃

@@ -1,0 +1,317 @@
+:experimental:
+// Define unicode for Apple Command key.
+:commandkey: &#8984;
+:toc: macro
+
+= Get Your JAM on With Gatsby, React, and Netlify
+
+https://www.gatsbyjs.org/[Gatsby] is a tool for creating static websites with React. It allows you to pull your data from virtually anywhere: content management systems (CMSs), Markdown files, APIs, and databases. Gatsby leverages GraphQL and webpack to combine your data and React code to generate static files for your website.
+
+This is a demo script with the bare-bones steps you need to https://todo[create a Gatsby app, deploy it to Netlify, and add a section that requires Okta for authentication].
+
+TIP: The brackets at the end of some steps indicate the IntelliJ Live Templates to use. You can find the template definitions at https://github.com/mraible/idea-live-templates[mraible/idea-live-templates].
+
+toc::[]
+
+== Create a New Project with Gatsby
+
+. Install prerequisites: Node 12+, a GitHub account, a Netlify account, and an Okta developer account
+
+. Install Gatsby CLI
+
+  npm install -g gatsby-cli
+
+. Create a new Gatsby Project
+
+  gatsby new gatsby-netlify-okta gatsbyjs/gatsby-starter-hello-world
+
+. Show project structure with `tree -I node_modules`
+
+. Start app with `npm start` and view at `http://localhost:8000`
+
+== Add Netlify CMS for Content Management
+
+. Install Netlify CMS and its Gatsby plugin
+
+  npm i netlify-cms-app@2.11.20 gatsby-plugin-netlify-cms@4.1.40
+
+. In `gatsby-config.js`, register the Netlify CMS plugin
+
+  module.exports = {
+    plugins: [`gatsby-plugin-netlify-cms`],
+  }
+
+. Create `static/admin/config.yml`
+
+  backend:
+    name: test-repo
+  media_folder: static/assets
+  public_folder: assets
+  collections:
+    - name: blog
+      label: Blog
+      folder: blog
+      create: true
+      fields:
+        - { name: path, label: Path }
+        - { name: date, label: Date, widget: datetime }
+        - { name: title, label: Title }
+        - { name: body, label: Body, widget: markdown }
+
+. Restart the app and show how you can edit content at `http://localhost:8080/admin`
+
+== Integrate Netlify CMS with GitHub for Continuous Deployment
+
+. Create a GitHub repo and add your project
+
+  git init
+  git add .
+  git commit -m "Add project to Git"
+  git remote add origin git@github.com:${user}/${repo}.git
+  git push origin master
+
+. Setup Netlify to publish from GitHub: https://app.netlify.com/start
+
+. Accept the default deploy settings and click **Deploy site**
+
+. Scroll down to see progress in the **Production deploys** section
+
+💥 You've built a React app, checked it into source control, and published it to production!
+
+Not only that, but you automated the deployment process. Any changes you push to your GitHub repo will be automatically deployed by Netlify. 😎
+
+== Add Your GitHub Repo as a Netlify CMS Backend
+
+. Modify `static/admin/config.yml` to use your GitHub repo:
+
+  backend:
+    name: github
+    repo: your-username/your-repo-name
+
+. Save `config.yml`, commit the change, and push it to your GitHub repo.
+
+  git commit -a -m "Add GitHub Backend"
+  git push origin master
+
+. Wait for Netlify to finish deploying and navigate to your site's `/admin/` endpoint. You'll be prompted to log in with GitHub.
+
+. Click **Login with GitHub** and you'll see a page that says "No Auth Provider Found".
+
+. On Netlify, go to your **Site settings** and navigate to **Access control** > (scroll down) **OAuth**.
+
+. Click **Install provider**. It will prompt you for a client ID and secret. To get this, navigate to https://github.com/settings/apps[GitHub Developer settings] > **OAuth Apps** > **New OAuth App**.
+
+. Register a new application with the following settings:
+
+* Application name: `My Gatsby Blog`
+* Homepage URL: `<copy URL from Netlify>`
+* Authorization callback URL: `https://api.netlify.com/auth/done`
+
+. Go to your site's `/admin/` endpoint and log in with GitHub
+
+. Create a post with `/blog/first-post` as the path
+
+. Run `git pull origin master` locally and you'll see your project is updated
+
+== Render Blog Posts with a BlogRoll React Component
+
+. Create `src/components/BlogRoll.js` to query for blog posts using GraphQL [`gatsby-blog-roll`]
+
+. Create a new page at `/src/pages/blog.js` for the blog index page [`gatsby-blog`]
+
+. Add a link to it in `src/pages/index.js`:
+
+  import React from 'react'
+  import { Link } from 'gatsby'
+  export default () => {
+    return (
+      <>
+        Hello world!
+        <p><Link to="/blog">View Blog</Link></p>
+      </>)
+  }
+
+. Restart your Gatsby app using `npm start` and navigate to `http://localhost:8000`. You'll receive an error because your project doesn't have Markdown support.
+
+== Add Markdown Support to Gatsby
+
+Gatsby's https://www.gatsbyjs.org/docs/adding-markdown-pages/[Add Markdown Pages docs] show the process that it uses to create pages from Markdown files.
+
+. Install Gatsby plugins for Markdown support
+
+  npm i gatsby-source-filesystem gatsby-transformer-remark
+
+. Then configure them in `gatsby-config.js`:
+
+  module.exports = {
+    plugins: [
+      `gatsby-plugin-netlify-cms`,
+      {
+        resolve: `gatsby-source-filesystem`,
+        options: {
+          path: `${__dirname}/blog`,
+          name: `markdown-pages`,
+        },
+      },
+      `gatsby-transformer-remark`
+    ]
+  }
+
+. Restart everything and you'll be able to see your blog posts at `/blog`
+
+. If you try to navigate into a blog, it won't work because you didn't tell Gatsby to generate pages for each one
+
+== Use Gatsby's Node API to Generate Static Blog Pages
+
+. Create a `gatsby-node.js` in the root directory of your project and add code to create a static page for each blog [`gatsby-node`]
+
+. Create `src/templates/blog.js` [`gastby-blog-template`]
+
+. Restart your app to see Markdown rendering properly!
+
+. Commit your changes and verify everything works in production
+
+  git add .
+  git commit -m "Add /blog and Markdown support"
+  git push origin master
+
+== Add an Account Section
+
+. Add an Account section for your site by creating a file at `src/pages/account.js` [`gatsby-account`]
+
+. Add a link to the account page in `src/pages/index.js`
+
+  <p><Link to="/account">My Account</Link></p>
+
+. Since this section will have dynamic content that shouldn't be rendered statically, you need to exclude it from the build. Add the following JavaScript to the bottom of `gatsby-node.js` to indicate that `/account` is a client-only route.
+
+  exports.onCreatePage = async ({ page, actions }) => {
+    const { createPage } = actions;
+    if (page.path.match(/^\/account/)) {
+      page.matchPath = "/account/*";
+      createPage(page)
+    }
+  };
+
+. Let's make this section secure with Okta!
+
+== Register Your App with Okta
+
+. Create an Okta developer account at https://developer.okta.com if you don't already have one. Log in to your account.
+
+. Navigate to **Applications** > **Add Application**
+
+  * Choose **Single-Page App** and **Next**
+  * Enter a name like `Gatsby Account`
+  * Specify the following Login redirect URIs:
+    ** `http://localhost:8000/account`
+    ** `http://localhost:9000/account`
+    ** `https://<your-site>.netlify.com/account`
+  * Specify the following Logout redirect URIs:
+    ** `http://localhost:8000`
+    ** `http://localhost:9000`
+    ** `https://<your-site>.netlify.com`
+  * Click **Done**
+
+. Add Gatsby URLs as Trusted Origins in **API** > **Trusted Origins**. Click **Add Origin**, select **CORS** and **Redirect** for Type, and add each of the following:
+
+  * `http://localhost:8000`
+  * `http://localhost:9000`
+  * `https://<your-site>.netlify.com`
+
+== Protect Your Gatsby Account Section with Okta
+
+. Install Okta's Sign-In Widget
+
+  npm i @okta/okta-signin-widget@3.7.2
+
+. Create a `Login` component in `src/components/Login.js` [`gatsby-login`]
+
+. Replace the placeholders near the top of this file with your Okta app settings.
+
+  const config = {
+    baseUrl: '<okta-org-url>',
+    clientId: '<okta-client-id>',
+    ...
+  };
+
+. Modify `src/pages/account.js` to include an `Account` component that uses `Login` to get ID tokens and logout [`gatsby-account-okta`]
+
+. Restart your app with `npm start`, open `http://localhost:8000` in a private window, and click on **My Account**. You'll be prompted to log in.
+
+== Fix Gatsby Production Build
+
+. To test building your app for production, run `gatsby build`
+
+. Exclude Okta's Sign-In Widget from server-side rendering by configuring webpack. Add the following to the bottom of `gatsby-node.js`
+
+  exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
+    if (stage === 'build-html') {
+      // Exclude Sign-In Widget from compilation path
+      actions.setWebpackConfig({
+        module: {
+          rules: [
+            {
+              test: /okta-sign-in/,
+              use: loaders.null(),
+            }
+          ],
+        },
+      })
+    }
+  };
+
+. Try `gatsby build` again and it should work this time. Run `gatsby serve` to see if the production build works on `http://localhost:9000`. Rejoice when it does! 🎉😃
+
+== Add User Registration
+
+. To give people the ability to sign-up for accounts, go to your Okta dashboard > **Users** > **Registration**, and enable it.
+
+. Modify `src/components/Login.js` to add Okta's user registration feature.
+
+  const config = {
+    ...
+    authParams: {
+      pkce: true,
+      responseType: ['token', 'id_token']
+    },
+    features: {
+      registration: true
+    }
+  };
+
+. Then build for production and serve it up again.
+
+  gatsby build
+  gatsby serve
+
+. You will now see a **Sign Up** link at the bottom of the login form
+
+🥳 Hooray - you did it! Check-in your code and rejoice in your new-found knowledge.
+
+=== Extend Your Gatsby Account Functionality
+
+Armed with Okta for authentication, you could develop features in the account settings of your application. For example, a setting where people can sign up for a newsletter (e.g., with https://tinyletter.com/[TinyLetter]). You could store this setting in Okta by creating a Node app that uses the https://github.com/okta/okta-sdk-nodejs[Okta Node SDK] to update user attributes.
+
+In fact, you might even develop a Java or .NET backend to handle this and communicate to it from your Gatsby application using `fetch()` and an OAuth 2.0 access token retrieved from the Sign-In Widget.
+
+  async componentDidMount() {
+    try {
+      const response = await fetch('http://<node-server-url>/user/settings', {
+        headers: {
+          Authorization: 'Bearer ' + await signIn.authClient.tokenManager.get('accessToken')
+        }
+      });
+      const data = await response.json();
+      this.setState({ settings: data.settings });
+    } catch (err) {
+      // handle error as needed
+      console.error(err);
+    }
+  }
+
+== Learn More!
+
+. Blog post: https://developer.okta.com/blog/2020/02/18/gatsby-react-netlify
+. GitHub repo: https://github.com/oktadeveloper/gatsby-netlify-okta-example
+. To see how the Okta Sign-In Widget can be customized, check out https://developer.okta.com/live-widget[developer.okta.com/live-widget].
