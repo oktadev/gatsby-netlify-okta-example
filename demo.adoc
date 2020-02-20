@@ -7,7 +7,7 @@
 
 https://www.gatsbyjs.org/[Gatsby] is a tool for creating static websites with React. It allows you to pull your data from virtually anywhere: content management systems (CMSs), Markdown files, APIs, and databases. Gatsby leverages GraphQL and webpack to combine your data and React code to generate static files for your website.
 
-This is a demo script with the bare-bones steps you need to https://todo[create a Gatsby app, deploy it to Netlify, and add a section that requires Okta for authentication].
+This is a demo script with the bare-bones steps you need to https://developer.okta.com/blog/2020/02/18/gatsby-react-netlify[create a Gatsby app, deploy it to Netlify, and add a section that requires Okta for authentication].
 
 TIP: The brackets at the end of some steps indicate the IntelliJ Live Templates to use. You can find the template definitions at https://github.com/mraible/idea-live-templates[mraible/idea-live-templates].
 
