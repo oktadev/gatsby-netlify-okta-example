@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'gatsby'
 
-export default () => {
+const index = () => {
   return (
     <>
       Hello world!
@@ -9,3 +9,5 @@ export default () => {
       <p><Link to="/account">My Account</Link></p>
     </>)
 }
+
+export default index

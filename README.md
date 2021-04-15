@@ -35,6 +35,7 @@ Modify `static/admin/config.yml` to use your GitHub repo:
 backend:
   name: github
   repo: your-username/your-repo-name
+  branch: main
 ```
 
 Push, watch your Netlify CI process, and enjoy the fruits of your labor when you're in production! 
@@ -86,7 +87,7 @@ This example uses the following open source libraries:
 
 * [Gatsby.js](https://www.gatsbyjs.org/)
 * [Netlify CMS](https://www.netlifycms.org/)
-* [Okta Sign-In Widget](https://developer.okta.com/code/javascript/okta_sign-in_widget/)
+* [Okta Sign-In Widget](https://github.com/okta/okta-signin-widget)
 
 ## Help
 
