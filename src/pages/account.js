@@ -6,14 +6,6 @@ import Login, { signIn } from '../components/Login'
 const Home = () => <p>Account Information</p>;
 const Settings = () => <p>Settings</p>;
 
-const isAuthenticated = () => {
-  if (typeof window !== 'undefined') {
-    return localStorage.getItem('isAuthenticated') === 'true';
-  } else {
-    return false;
-  }
-};
-
 class Account extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +21,6 @@ class Account extends React.Component {
     } else {
       // Token has expired
       this.setState({user: false});
-      localStorage.setItem('isAuthenticated', 'false');
     }
   }
 
@@ -37,14 +28,13 @@ class Account extends React.Component {
     signIn.authClient.signOut().catch((error) => {
       console.error('Sign out error: ' + error)
     }).then(() => {
-      localStorage.setItem('isAuthenticated', 'false');
       this.setState({user: false});
       navigate('/');
     });
   }
 
   render() {
-    if (!isAuthenticated()) {
+    if (!this.state.user) {
       return (
         <Login/>
       );

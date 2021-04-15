@@ -3,28 +3,28 @@
   "private": true,
   "description": "A simplified bare-bones starter for Gatsby",
   "version": "0.1.0",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
-    "@okta/okta-signin-widget": "^3.7.2",
-    "gatsby": "^2.19.7",
-    "gatsby-plugin-netlify-cms": "^4.1.40",
-    "gatsby-source-filesystem": "^2.1.48",
-    "gatsby-transformer-remark": "^2.6.52",
-    "netlify-cms-app": "^2.11.20",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "@okta/okta-signin-widget": "^5.5.2",
+    "gatsby": "^3.2.1",
+    "gatsby-plugin-netlify-cms": "^5.3.0",
+    "gatsby-source-filesystem": "^3.3.0",
+    "gatsby-transformer-remark": "^4.0.0",
+    "netlify-cms-app": "^2.14.45",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "devDependencies": {
-    "prettier": "^1.19.1"
+    "prettier": "2.2.1"
   },
   "repository": {
     "type": "git",
