@@ -18,7 +18,7 @@
     "gatsby": "^3.2.1",
     "gatsby-plugin-netlify-cms": "^5.3.0",
     "gatsby-source-filesystem": "^3.3.0",
-    "gatsby-transformer-remark": "^4.0.0",
+    "gatsby-transformer-remark": "^5.25.1",
     "netlify-cms-app": "^2.14.45",
     "react": "^17.0.1",
     "react-dom": "^17.0.1"
